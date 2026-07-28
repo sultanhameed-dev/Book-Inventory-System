@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Book</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
+        .custom-nav { background: linear-gradient(135deg, #0d6efd, #0b5ed7); }
+        .nav-link { color: rgba(255,255,255,0.9) !important; font-weight: 500; }
+        .search-card { background: #ffffff; border-radius: 16px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .table-custom { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg custom-nav navbar-dark p-3 sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-4" href="/"><i class="fa-solid fa-book-bookmark me-2"></i>BookSpace</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto gap-3">
+                <li class="nav-item"><a class="nav-link" href="/"><i class="fa-solid fa-house me-1"></i> Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/addBook"><i class="fa-solid fa-plus me-1"></i> Add Book</a></li>
+                <li class="nav-item"><a class="nav-link" href="/search"><i class="fa-solid fa-magnifying-glass me-1"></i> Search</a></li>
+                <li class="nav-item"><a class="nav-link" href="/deleteBook"><i class="fa-solid fa-trash me-1"></i> Delete</a></li>
+                <li class="nav-item"><a class="nav-link" href="/info"><i class="fa-solid fa-chart-pie me-1"></i> Dashboard</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5" style="max-width: 850px;">
+    <div class="search-card p-4 p-md-5 mb-4">
+        <h3 class="fw-bold text-dark mb-1"><i class="fa-solid fa-magnifying-glass text-primary me-2"></i>Search Book</h3>
+        <p class="text-muted small mb-4">Enter a Book ID to search for stored details.</p>
+
+        <form th:action="@{/search}" method="post">
+            <div class="input-group">
+                <input type="text" name="bookid" class="form-control form-control-lg" placeholder="Enter Book ID (e.g. B101)" required>
+                <button class="btn btn-primary px-4 fw-medium" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i> Search</button>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-exclamation me-2"></i><span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div th:if="${book != null}" class="table-responsive table-custom mt-4">
+        <table class="table table-hover align-middle mb-0 bg-white">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th><th>Title</th><th>Author</th><th>Publisher</th>
+                <th>Year</th><th>Price</th><th>Qty</th><th>Language</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="fw-bold text-primary" th:text="${book.bookid}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.publisher}"></td>
+                <td th:text="${book.publicationYear}"></td>
+                <td class="fw-medium" th:text="${'$' + book.price}"></td>
+                <td><span class="badge bg-secondary" th:text="${book.quantity}"></span></td>
+                <td th:text="${book.language}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

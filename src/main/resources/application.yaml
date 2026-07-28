@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: Book-Inventory-System
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/bookdb
+
+server:
+  port: 9090
